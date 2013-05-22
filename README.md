@@ -1,5 +1,12 @@
 ## fswatch.c
 
+### I have made modifications to the original program
+
+My version does not fork a process. It writes out lines on stdout that provide
+information about changed files. This is a lot more precise and informative. 
+
+## Original readme follows. 
+
 This is a small program using the Mac OS X FSEvents API to monitor a directory.
 When an event about any change to that directory is received, the specified
 shell command is executed by `/bin/bash`.
