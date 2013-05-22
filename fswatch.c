@@ -6,8 +6,7 @@
 
 /* fswatch.c
  * 
- * usage: ./fswatch /some/directory[:/some/otherdirectory:...] "some command" 
- * "some command" is eval'd by bash when /some/directory generates any file events
+ * usage: ./fswatch /some/directory[:/some/otherdirectory:...]  
  *
  * compile me with something like: gcc fswatch.c -framework CoreServices -o fswatch
  *
@@ -16,9 +15,8 @@
 
 extern char **environ;
 //the command to run
-char *to_run;
 
-//fork a process when there's any change in watch file
+// write out some info when there's any change in watched files
 void callback( 
     ConstFSEventStreamRef streamRef, 
     void *clientCallBackInfo, 
@@ -30,37 +28,18 @@ void callback(
   pid_t pid;
   int   status;
 
-  /*printf("Callback called\n"); */
-
-  if((pid = fork()) < 0) {
-    fprintf(stderr, "error: couldn't fork \n");
-    exit(1);
-  } else if (pid == 0) {
-    char *args[4] = {
-      "/bin/bash",
-      "-c",
-      to_run,
-      0
-    };
-    if(execve(args[0], args, environ) < 0) {
-      fprintf(stderr, "error: error executing\n");
-      exit(1);
-    }
-  } else {
-    while(wait(&status) != pid)
-      ;
+  for (int i=0; i<numEvents; ++i) {
+	printf("%s %x\n", ((char **)eventPaths)[i], eventFlags[i]);
   }
 } 
  
 //set up fsevents and callback
 int main(int argc, char **argv) {
 
-  if(argc != 3) {
-    fprintf(stderr, "You must specify a directory to watch and a command to execute on change\n");
+  if(argc != 2) {
+    fprintf(stderr, "You must specify a directory to watch\n");
     exit(1);
   }
-
-  to_run = argv[2];
 
   CFStringRef mypath = CFStringCreateWithCString(NULL, argv[1], kCFStringEncodingUTF8); 
   CFArrayRef pathsToWatch = CFStringCreateArrayBySeparatingStrings (NULL, mypath, CFSTR(":"));
@@ -75,7 +54,7 @@ int main(int argc, char **argv) {
     pathsToWatch,
     kFSEventStreamEventIdSinceNow,
     latency,
-    kFSEventStreamCreateFlagNone
+	kFSEventStreamCreateFlagFileEvents
   ); 
 
   FSEventStreamScheduleWithRunLoop(stream, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode); 
