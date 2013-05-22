@@ -30,6 +30,7 @@ void callback(
 
   for (int i=0; i<numEvents; ++i) {
 	printf("%s %x\n", ((char **)eventPaths)[i], eventFlags[i]);
+	fflush(stdout);
   }
 } 
  
