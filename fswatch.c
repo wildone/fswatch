@@ -29,9 +29,10 @@ void callback(
   int   status;
 
   for (int i=0; i<numEvents; ++i) {
-	printf("%x %s\n", eventFlags[i], ((char **)eventPaths)[i]);
-	fflush(stdout);
+	printf("%x %s; ", eventFlags[i], ((char **)eventPaths)[i]);
   }
+  printf("\n");
+  fflush(stdout);
 } 
  
 //set up fsevents and callback
