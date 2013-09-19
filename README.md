@@ -2,8 +2,10 @@
 
 ### I have made modifications to the original program
 
-My version does not fork a process. It writes out lines on stdout that provide
+My version does not fork a process. It can writes out lines on stdout that provide
 information about changed files. This is a lot more precise and informative. 
+
+It also can quit when first chnage is found so that you can use this is bash scripts.
 
 ## Original readme follows. 
 
@@ -24,36 +26,14 @@ a directory on your `$PATH`.
 
 ### Basic Usage
 
-    ./fswatch /some/dir "echo changed" 
+    usage: ./fswatch -h -q -s -p /some/directory[:/some/otherdirectory:...]
 
-This would monitor `/some/dir` for any change, and run `echo changed`
-when a modification event is received.
 
 In the case you want to watch multiple directories, just separate them
 with colons like:
 
     ./fswatch /some/dir:/some/otherdir "echo changed" 
 
-### Usage with rsync
-
-`fswatch` can be used with `rsync` to keep a remote directory in sync
-with a local directory continuously as local files change.  The
-following example was contributed by
-[Michael A. Smith](http://twitter.com/michaelasmith):
-
-```bash
-#!/bin/sh
-
-##
-# Keep local path in sync with remote path on server.
-# Ignore .git metadata.
-#
-local=$1
-remote=$2
-
-cd "$local" &&
-fswatch . "date +%H:%M:%S && rsync -iru --exclude .git --exclude-from=.gitignore --delete . $remote"
-```
 
 ### About
 
