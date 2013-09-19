@@ -28,13 +28,6 @@ a directory on your `$PATH`.
 
     usage: ./fswatch -h -q -s -p /some/directory[:/some/otherdirectory:...]
 
-
-In the case you want to watch multiple directories, just separate them
-with colons like:
-
-    ./fswatch /some/dir:/some/otherdir "echo changed" 
-
-
 ### About
 
 This code was adapted from the example program in the
