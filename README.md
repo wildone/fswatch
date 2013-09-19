@@ -26,7 +26,7 @@ a directory on your `$PATH`.
 
 ### Basic Usage
 
-    usage: ./fswatch -h -q -s -p /some/directory[:/some/otherdirectory:...]
+    example: ./fswatch --help --silent --quit --debug --ignore .DS_store:.idea:.git --p .
 
 ### About
 
