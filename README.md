@@ -1,4 +1,4 @@
-## fswatch.c
+## fswatch.c (Mac OSX)
 
 ### I have made modifications to the original program
 
