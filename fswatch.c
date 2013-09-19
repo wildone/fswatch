@@ -6,7 +6,7 @@
 
 /* fswatch.c
  * 
- * usage: ./fswatch -q -s -p /some/directory[:/some/otherdirectory:...]
+ * usage: ./fswatch -h -q -s -p /some/directory[:/some/otherdirectory:...]
  *
  * compile me with something like: gcc fswatch.c -framework CoreServices -o fswatch
  *
