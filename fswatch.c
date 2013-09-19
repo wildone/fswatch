@@ -20,7 +20,7 @@ int pflag = 0; //path
 int hflag = 0; //help
 char *pvalue = "";
 
-// write out some info when there's any change in watched files
+// call back from OS API, write out some info when there's any change in watched files
 void callback( 
     ConstFSEventStreamRef streamRef, 
     void *clientCallBackInfo, 
@@ -29,15 +29,11 @@ void callback(
     const FSEventStreamEventFlags eventFlags[], 
     const FSEventStreamEventId eventIds[]) 
 { 
-  pid_t pid;
-  int   status;
-
-    /*printf("Callback called\n"); */
 
   for (int i=0; i<numEvents; ++i) {
 	printf("%x %s; ", eventFlags[i], ((char **)eventPaths)[i]);
+    printf("\n");
   }
-  printf("\n");
   fflush(stdout);
 
   if (qflag == 1) {
@@ -110,6 +106,7 @@ int main(int argc, char **argv) {
             printf ("\nwatching...\n\n");
         }
 
+        //CALL OS API
         CFStringRef watchPath = CFStringCreateWithCString(NULL, pvalue, kCFStringEncodingUTF8);
         CFArrayRef pathsToWatch = CFStringCreateArrayBySeparatingStrings (NULL, watchPath, CFSTR(":"));
 
