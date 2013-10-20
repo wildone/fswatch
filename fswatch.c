@@ -111,7 +111,9 @@ void callback(
             }
             continue;
         } else {
-            printf("\t\tnot ignoring\n");
+            if (debug_flag==1) {
+                printf("\t\tnot ignoring\n");
+            }
             quitReady = 1;
         }
     }
